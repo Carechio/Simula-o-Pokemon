@@ -2,9 +2,10 @@ package Exercicio01;
 
 /*A classe Treinador armazena o nome do treinador, 
  * o numero de pokemon ainda disponiveis para a
- * batalha assim como todos os seus pokemon (max 6). 
- * A classe tambem fornece metodos para fornecer o 
- * nome do treinador e um de seus pokemon em especifico.
+ * batalha (numPok) assim como todos os seus pokemon (max 6). 
+ * A classe tambem apresenta metodos para fornecer o 
+ * nome do treinador, um de seus pokemon em especifico
+ * e metodos de manipulacao do numPok.
  */
 public class Treinador {
 	private String nome;
@@ -45,6 +46,7 @@ public class Treinador {
 	public void perdePok() {
 		numPok--;
 	}
+	//Retorna o primeiro pokemon apto a batalha disponivel.
 	public Pokemon getNextPokemon() {
 		for (int i = 0; i < pokemon.length; i++) {
 			if (pokemon[i].getHP() != 0) return pokemon[i];

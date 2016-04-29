@@ -74,7 +74,7 @@ public class BatalhaControls extends Controller{
 		}
 	}
 	
-	//O Evento UsarItem implementa a utilização de um item de cura (+5 HP)
+	//O Evento UsarItem implementa a utilização de um item de cura (+20 HP)
 	//O treinador ativo utiliza o item sobre o Pokemon ativo na Arena.
 	private class UsarItem extends Event {
 		private Pokemon receptor;
@@ -136,6 +136,7 @@ public class BatalhaControls extends Controller{
 		}
 	}
 	
+	//O Evento Pokebola implementa a tentativa de captura de um pokemon selvagem.
 	private class Pokebola extends Event {
 		private Pokemon capturado;
 		private Treinador apanhador;
@@ -171,6 +172,7 @@ public class BatalhaControls extends Controller{
 		}
 	}
 	
+	//O Evento Turno implementa a realizacao de uma acao.
 	private class Turno extends Event {
 		private Arena batalha;
 		private int turno;
@@ -199,9 +201,11 @@ public class BatalhaControls extends Controller{
 		}
 	}
 	
-	//main controla as acoes utilizadas pelos treinadores turno a turno.
+	//main controla as acoes utilizadas pelos treinadores turno a turno,
+	//os ataques do pokemon selvagem e os modos de jogo.
 	public static void main(String[] args) {
 		
+		//criacao dos pokemon.
 		Charizard charizard = new Charizard();
 		Blastoise blastoise = new Blastoise();
 		Arcanine arcanine = new Arcanine();
@@ -213,32 +217,40 @@ public class BatalhaControls extends Controller{
 		Scyther scyther = new Scyther();
 		Starmie starmie = new Starmie();
 		
+		//Inicializacao do treinador Ash.
 		Pokemon[] pokemonAsh = new Pokemon[6];
 		pokemonAsh[0] = charizard;
 		pokemonAsh[1] = arcanine;
 		pokemonAsh[2] = starmie;
 		pokemonAsh[3] = rayquaza;
 		pokemonAsh[4] = scyther;
-		
 		Treinador ash = new Treinador("Ash", pokemonAsh);
 		
+		//Inicializacao do treinador Gary.
 		Pokemon[] pokemonGary = new Pokemon[6];
 		pokemonGary[0] = blastoise;
 		pokemonGary[1] = raticate;
 		pokemonGary[2] = nidoqueen;
 		pokemonGary[3] = crobat;
 		pokemonGary[4] = dragonite;
-		
 		Treinador gary = new Treinador("Gary", pokemonGary);
 		
+		//Inicializacao da arena.
 		Arena batalha = new Arena(ash, gary, charizard, blastoise);
 		long tm = System.currentTimeMillis();
 		
-		if (args[0] == "1") {
+		//Modos de jogo:
+		//1 - simulacao de batalha vs.
+		//2 - andar pelo mapa.
+		int k = Integer.parseInt(args[0]);
+		
+		//Simulacao de batalha vs.
+		if (k == 1) {
 			BatalhaControls bc = new BatalhaControls();
 			System.out.println("Comeca batalha");
-			double[] acao1vet = {1.1, 1.2, 3.4, 2.0, 1.1, 1.2, 1.3, 1.4, 1.1, 1.2, 1.3, 1.4};
-			double[] acao2vet = {1.1, 3.3, 1.3, 1.3, 1.3, 2.0, 1.3, 1.3, 1.3, 2.0, 1.3, 1.3};
+			//acoes pre-definidas dos treinadores.
+			double[] acao1vet = {1.1, 1.2, 1.3, 1.4, 1.1, 2.0, 1.3, 4.0};
+			double[] acao2vet = {1.1, 2.0, 1.3, 1.4, 3.3, 1.2, 1.3, 1.3};
 			for (int i = 0; i < acao1vet.length && batalha.getVencedor() == null; i++) {
 				System.out.println ("\nNova rodada");
 				if (acao1vet[i] <= acao2vet[i]) {
@@ -263,7 +275,12 @@ public class BatalhaControls extends Controller{
 				}
 			}
 		}
+		
+		//Andar pelo mapa.
 		else {
+			//Acoes disponiveis:
+			//1 - anda sobre chao comum.
+			//2 - anda sobre gramado.
 			Scanner scanner = new Scanner(System.in);
 			boolean achouSelvagem = false;
 			int semente = 1000;
@@ -277,10 +294,12 @@ public class BatalhaControls extends Controller{
 					semente += 1000;
 				}
 				else {
+					//anda no mapa.
 					r = new Random(semente);
 					double probabilidade = r.nextDouble();
 					System.out.println(probabilidade);
 					if(probabilidade > 0.8) {
+						//achou pokemon selvagem.
 						achouSelvagem = true;
 						Pokemon[] pokemonSelvagem = new Pokemon[6];
 						Pokemon ratata = new Ratata();
@@ -290,6 +309,7 @@ public class BatalhaControls extends Controller{
 						
 						BatalhaControls bc = new BatalhaControls();
 						System.out.println("Um pokemon selvagem apareceu!");
+						//ataques aleatorios do pokemon selvagem
 						double[] acaoSelvagem = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 						double[] acao1vet = {2.1, 2.1, 2.1, 2.1, 1.1, 1.2, 1.3, 1.4, 1.1, 1.2, 1.3, 1.4};
 						for (int i = 0; i < acao1vet.length && bush.getVencedor() == null; i++) {
@@ -317,6 +337,7 @@ public class BatalhaControls extends Controller{
 						}
 					}
 					else {
+						//nao encontrou pokemon selvagem.
 						System.out.println("Nothing Happened.");
 						semente += 1000;
 					}

@@ -1,7 +1,10 @@
 package Exercicio01;
 
-/* A classe Pokemon armaena nome, HP atual, HP máximo e tipo do pokemon. Metodos para manipular HP,
- * fornecer nome ou tipo e os ataques do pokemon.
+/* A classe Pokemon armazena nome, HP atual, HP máximo, tipo do pokemon e 
+ * sua chance de ser capturado. Metodos para manipular HP,
+ * fornecer nome, tipo, catchRate e os ataques do pokemon tambem estao presentes.
+ * A classe possui 4 construtores ja que existem pokemon que possuem de 1 a 4
+ * tipos diferentes de ataque.
  */
 abstract public class Pokemon {
 	private String  nome;
@@ -85,6 +88,8 @@ abstract public class Pokemon {
 	public int getMaxHP() {
 		return maxHP;
 	}
+	//Retorna o ataque de numero igual a num se este existir.
+	//Caso contrario retorna o ataque existente de menor numero.
 	public Ataque getAtaque(int num) {
 		if(num == 1 && atk1 != null) return atk1;
 		if(num == 2 && atk2 != null) return atk2;
@@ -98,6 +103,7 @@ abstract public class Pokemon {
 		}
 		return null;
 	}
+	//Retorna a chance que um pokemon tem de ser capturado (catchRate).
 	public int getCatchRate() {
 		return catchRate;
 	}
