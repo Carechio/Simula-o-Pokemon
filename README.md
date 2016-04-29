@@ -1,4 +1,4 @@
-# Poke_Project
+# Simula-o-Pokemon
 Exercícios 1 e 2 da aula 7 do curso de laboratório de programação orientada a objetos
 
 Enunciado do exercício:
